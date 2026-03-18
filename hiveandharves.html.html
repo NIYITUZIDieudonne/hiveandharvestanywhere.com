@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIVE AND HARVEST · Share beekeepers’ products</title>
+  <!-- Font Awesome 6 (free) for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts for Rockwell Extra Bold -->
+  <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+  <style>
+    /* ----- CSS RESET & GLOBAL ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rockwell', 'Segoe UI', serif;
+      font-weight: 700;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Beehives_in_Butte_County_%282025%29-104A8312.jpg/1024px-Beehives_in_Butte_County_%282025%29-104A8312.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #2e3b2c;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* Semi-transparent overlay for all content */
+    main, footer, header, .modal-content, .policy-page, .terms-page, .deletion-page {
+      background-color: rgba(254, 252, 245, 0.92);
+      backdrop-filter: blur(3px);
+    }
+
+    header {
+      background-color: rgba(248, 237, 208, 0.95);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ----- UTILITY CLASSES ----- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #f1b24a;
+      color: #1e2a1c;
+      font-weight: 700;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: 0.25s;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      cursor: pointer;
+      font-size: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .btn:hover {
+      background-color: #ffc55a;
+      border-color: #b37b3a;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #f1b24a;
+      color: #2e3b2c;
+    }
+
+    .btn-outline:hover {
+      background: #f1b24a;
+      border-color: #f1b24a;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: #2b4b2b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Rockwell', serif;
+    }
+    .section-title i {
+      color: #e09d32;
+      font-size: 2rem;
+    }
+    .section-subhead {
+      font-size: 1.2rem;
+      color: #4f644b;
+      margin-bottom: 2.5rem;
+      border-left: 5px solid #f1b24a;
+      padding-left: 1rem;
+      font-weight: 700;
+    }
+
+    /* ----- HEADER / NAV ----- */
+    .top-bar {
+      background-color: rgba(248, 237, 208, 0.95);
+      padding: 0.6rem 0;
+      border-bottom: 2px solid #eedbaf;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .bee-icon {
+      font-size: 2.2rem;
+      color: #c47e2c;
+      filter: drop-shadow(2px 2px 0 #f7d87b);
+    }
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e461e;
+      letter-spacing: -0.5px;
+      font-family: 'Rockwell', serif;
+    }
+    .logo-text span {
+      color: #b3681c;
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 700;
+      color: #2b4b2b;
+      transition: color 0.2s;
+      font-size: 1.1rem;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      cursor: pointer;
+      font-family: 'Rockwell', serif;
+    }
+    .nav-links a:hover {
+      color: #a86313;
+      border-bottom-color: #f1b24a;
+    }
+    .nav-links .btn {
+      padding: 0.4rem 1.2rem;
+      font-size: 0.95rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    /* ----- HERO SECTION (with fixed background) ----- */
+    .hero {
+      background: linear-gradient(96deg, rgba(255, 247, 227, 0.9) 0%, rgba(254, 241, 207, 0.85) 100%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Beehives_in_Butte_County_%282025%29-104A8312.jpg/1024px-Beehives_in_Butte_County_%282025%29-104A8312.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 2rem 0 3rem 0;
+    }
+    .hero .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .hero-text {
+      flex: 1 1 380px;
+    }
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #1d3b1d;
+      margin-bottom: 0.8rem;
+      font-family: 'Rockwell', serif;
+    }
+    .hero-text h1 i {
+      color: #d9922e;
+    }
+    .hero-text p {
+      font-size: 1.3rem;
+      color: #3f573c;
+      margin: 1rem 0 2rem 0;
+      max-width: 550px;
+      font-weight: 700;
+    }
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-img {
+      flex: 1 1 380px;
+      background: #dbb57e;
+      border-radius: 40px 40px 40px 10px;
+      box-shadow: 25px 25px 0 rgba(190, 145, 70, 0.15);
+      overflow: hidden;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Beekeeper_keeping_bees.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      min-height: 400px;
+      border: 4px solid white;
+    }
+
+    /* ----- ABOUT PAGE ----- */
+    .about-page {
+      padding: 3rem 0 5rem;
+      background: linear-gradient(135deg, rgba(255, 249, 235, 0.95) 0%, rgba(255, 252, 241, 0.95) 100%);
+      display: none;
+    }
+
+    .about-page.active {
+      display: block;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .about-header h1 {
+      font-size: 3.5rem;
+      color: #2b4b2b;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .about-header p {
+      font-size: 1.3rem;
+      color: #b3681c;
+      font-weight: 700;
+    }
+
+    .about-hero-image {
+      width: 100%;
+      height: 400px;
+      background-image: url('https://images.unsplash.com/photo-1587049352847-81a56d73c5d9?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 50px 20px 50px 20px;
+      margin-bottom: 3rem;
+      border: 4px solid #f1b24a;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 30px;
+      box-shadow: 15px 15px 0 rgba(190, 145, 70, 0.1);
+      border: 2px solid #f5daa4;
+    }
+
+    .about-card h3 {
+      font-size: 1.8rem;
+      color: #2b4b2b;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .about-card p {
+      font-size: 1.1rem;
+      color: #4a6045;
+      line-height: 1.8;
+      font-weight: 700;
+    }
+
+    .about-mission {
+      background: #fef7e7;
+      padding: 3rem;
+      border-radius: 50px 20px 50px 20px;
+      border-left: 8px solid #f1b24a;
+      margin-top: 3rem;
+    }
+
+    .about-mission h2 {
+      font-size: 2.5rem;
+      color: #2b4b2b;
+      margin-bottom: 1.5rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .about-mission p {
+      font-size: 1.2rem;
+      color: #2e3b2c;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    /* ----- PRIVACY POLICY PAGE ----- */
+    .policy-page {
+      padding: 3rem 0 5rem;
+      background: rgba(255, 249, 235, 0.95);
+      display: none;
+    }
+
+    .policy-page.active {
+      display: block;
+    }
+
+    .policy-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .policy-header h1 {
+      font-size: 3rem;
+      color: #2b4b2b;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .policy-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 15px 15px 0 rgba(190, 145, 70, 0.1);
+      border: 2px solid #f5daa4;
+    }
+
+    .policy-section {
+      margin-bottom: 2rem;
+    }
+
+    .policy-section h2 {
+      font-size: 1.8rem;
+      color: #b3681c;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .policy-section p {
+      font-size: 1.1rem;
+      color: #4a6045;
+      line-height: 1.8;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .policy-section ul {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .policy-section li {
+      font-size: 1.1rem;
+      color: #4a6045;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ----- TERMS & CONDITIONS PAGE ----- */
+    .terms-page {
+      padding: 3rem 0 5rem;
+      background: rgba(255, 249, 235, 0.95);
+      display: none;
+    }
+
+    .terms-page.active {
+      display: block;
+    }
+
+    .terms-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .terms-header h1 {
+      font-size: 3rem;
+      color: #2b4b2b;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .terms-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 15px 15px 0 rgba(190, 145, 70, 0.1);
+      border: 2px solid #f5daa4;
+    }
+
+    .terms-section {
+      margin-bottom: 2rem;
+    }
+
+    .terms-section h2 {
+      font-size: 1.8rem;
+      color: #b3681c;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .terms-section p {
+      font-size: 1.1rem;
+      color: #4a6045;
+      line-height: 1.8;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .terms-section ul {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .terms-section li {
+      font-size: 1.1rem;
+      color: #4a6045;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ----- DATA DELETION INSTRUCTIONS PAGE ----- */
+    .deletion-page {
+      padding: 3rem 0 5rem;
+      background: rgba(255, 249, 235, 0.95);
+      display: none;
+    }
+
+    .deletion-page.active {
+      display: block;
+    }
+
+    .deletion-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .deletion-header h1 {
+      font-size: 3rem;
+      color: #2b4b2b;
+      margin-bottom: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .deletion-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 15px 15px 0 rgba(190, 145, 70, 0.1);
+      border: 2px solid #f5daa4;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .deletion-step {
+      background: #f9f9f9;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid #f1b24a;
+      border-radius: 0 15px 15px 0;
+    }
+
+    .deletion-step h3 {
+      color: #b3681c;
+      margin-bottom: 10px;
+      font-family: 'Rockwell', serif;
+    }
+
+    .deletion-step ul {
+      margin-left: 1.5rem;
+      margin-top: 10px;
+    }
+
+    .deletion-step li {
+      color: #4a6045;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .deletion-email {
+      color: #f1b24a;
+      font-weight: 700;
+    }
+
+    .deletion-note {
+      background: #fef7e7;
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .deletion-note p {
+      color: #2b4b2b;
+    }
+
+    .confirmation-code {
+      background: #f1b24a;
+      color: #1e2a1c;
+      padding: 10px 20px;
+      border-radius: 30px;
+      display: inline-block;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+
+    /* ----- BEEKEEPER PROFILES SECTION ----- */
+    .beekeepers-section {
+      padding: 4rem 0;
+      background: rgba(255, 249, 235, 0.95);
+    }
+
+    .beekeeper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .beekeeper-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      border: 1px solid #f5daa4;
+      transition: transform 0.2s;
+    }
+
+    .beekeeper-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(116, 76, 22, 0.1);
+    }
+
+    .beekeeper-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #f1b24a;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border: 4px solid #ffe2a5;
+    }
+
+    .beekeeper-name {
+      font-size: 1.8rem;
+      color: #2b4b2b;
+      margin-bottom: 0.3rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .beekeeper-apiary {
+      color: #b3681c;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .beekeeper-bio {
+      margin: 1rem 0;
+      color: #4a6045;
+      font-weight: 700;
+    }
+
+    .beekeeper-stats {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      color: #c47e2c;
+      margin: 1rem 0;
+      font-weight: 700;
+    }
+
+    .beekeeper-link {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: #f1b24a;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+    }
+
+    .beekeeper-link:hover {
+      border-bottom-color: #f1b24a;
+    }
+
+    /* ----- PRODUCTS PAGE STYLES ----- */
+    .products-page {
+      padding: 3rem 0 5rem;
+      background: rgba(250, 247, 238, 0.95);
+      display: none;
+    }
+
+    .products-page.active {
+      display: block;
+    }
+
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #b3681c;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      color: #f1b24a;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-select {
+      padding: 0.8rem 1.5rem;
+      border: 2px solid #f5daa4;
+      border-radius: 30px;
+      background: white;
+      color: #2b4b2b;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Rockwell', serif;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 0.8rem 1.5rem;
+      border: 2px solid #f5daa4;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #f1b24a;
+    }
+
+    .search-box button {
+      padding: 0.8rem 1.5rem;
+      background: #f1b24a;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Rockwell', serif;
+    }
+
+    /* ----- FEATURED PRODUCE ----- */
+    .featured-section {
+      padding: 4rem 0;
+      background: rgba(250, 247, 238, 0.95);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .produce-card {
+      background: white;
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: 0.2s ease-in-out;
+      border: 1px solid #f7e1b3;
+    }
+    .produce-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 38px rgba(116, 76, 22, 0.1);
+    }
+
+    .card-img {
+      height: 220px;
+      background-color: #ebd3b0;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #f1b24a;
+      color: #1e2a1c;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* REAL PRODUCT IMAGES */
+    .img-honey-jar {
+      background-image: url('https://images.unsplash.com/photo-1587049352847-81a56d73c5d9?w=400&h=300&fit=crop');
+    }
+    .img-honeycomb {
+      background-image: url('https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=300&fit=crop');
+    }
+    .img-beeswax-block {
+      background-image: url('https://images.unsplash.com/photo-1607197106377-9739dde59b23?w=400&h=300&fit=crop');
+    }
+    .img-pollen-bowl {
+      background-image: url('https://images.unsplash.com/photo-1587049352465-6a7c595b2b3d?w=400&h=300&fit=crop');
+    }
+    .img-propolis {
+      background-image: url('https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=300&fit=crop');
+    }
+    .img-royal-jelly {
+      background-image: url('https://images.unsplash.com/photo-1587049352847-81a56d73c5d9?w=400&h=300&fit=crop');
+    }
+    .img-beeswax-candles {
+      background-image: url('https://images.unsplash.com/photo-1607197106377-9739dde59b23?w=400&h=300&fit=crop');
+    }
+    .img-creamed-honey {
+      background-image: url('https://images.unsplash.com/photo-1587049352847-81a56d73c5d9?w=400&h=300&fit=crop');
+    }
+
+    .card-content {
+      padding: 1.5rem 1.2rem 1.8rem;
+    }
+    .card-content h3 {
+      font-size: 1.7rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Rockwell', serif;
+    }
+    .card-content p {
+      color: #4a6045;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .card-beekeeper-info {
+      background: #fef7e7;
+      padding: 0.8rem;
+      border-radius: 15px;
+      margin: 1rem 0;
+    }
+
+    .beekeeper-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .beekeeper-mini span {
+      font-weight: 700;
+    }
+
+    .beekeeper-details {
+      font-size: 0.9rem;
+      color: #5d7252;
+      font-weight: 700;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #8f5818;
+    }
+    .add-to-cart-btn {
+      background: #f1b24a;
+      color: #1e2a1c;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-to-cart-btn:hover {
+      background: #ffc55a;
+      transform: scale(1.05);
+    }
+
+    /* ----- HOW IT WORKS ----- */
+    .how-it-works {
+      padding: 3rem 0 5rem;
+      background: rgba(255, 252, 241, 0.95);
+    }
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .step-item {
+      flex: 1 1 200px;
+      max-width: 250px;
+      text-align: center;
+    }
+    .step-img {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      background: #fcefcb;
+      border: 4px dashed #f1b24a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      box-shadow: 0 8px 0 #c49a5b;
+    }
+    .step-item h4 {
+      font-size: 1.7rem;
+      color: #3e6132;
+      font-family: 'Rockwell', serif;
+    }
+    .step-item p {
+      color: #5d7252;
+      font-weight: 700;
+    }
+
+    /* ----- TESTIMONIAL ----- */
+    .community {
+      background: rgba(237, 220, 184, 0.95);
+      padding: 4rem 0;
+    }
+    .testimonial-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .test-card {
+      background: #fffef7;
+      border-radius: 50px 20px 50px 20px;
+      padding: 2rem;
+      flex: 1 1 280px;
+      box-shadow: 15px 15px 0 #ba8f5a;
+      border: 1px solid #cfa668;
+    }
+    .test-card i.fa-quote-left {
+      color: #f1b24a;
+      font-size: 2rem;
+      opacity: 0.4;
+    }
+    .test-card p {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin: 1rem 0;
+      font-weight: 700;
+    }
+    .beekeeper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      font-weight: 700;
+    }
+    .beekeeper-avatar-small {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #e5b66b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: rgba(248, 217, 156, 0.95);
+      background-image: repeating-linear-gradient(45deg, #ffdfa8 0px, #ffdfa8 20px, #fef1cf 20px, #fef1cf 40px);
+      padding: 3rem 0;
+      text-align: center;
+    }
+    .cta-banner h2 {
+      font-size: 3rem;
+      color: #213421;
+      font-family: 'Rockwell', serif;
+    }
+    .cta-banner .btn {
+      font-size: 1.5rem;
+      padding: 1rem 3rem;
+      margin-top: 1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: rgba(29, 47, 29, 0.95);
+      color: #f2e5c6;
+      padding: 3rem 0 1.5rem;
+    }
+    .footer-main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer-col p {
+      margin: 0.8rem 0;
+    }
+    .footer-col i {
+      color: #f1b24a;
+      margin-right: 0.5rem;
+    }
+    .footer-col a {
+      color: #f2e5c6;
+      text-decoration: none;
+    }
+    .footer-col a:hover {
+      color: #f1b24a;
+      text-decoration: underline;
+    }
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #5f784b;
+      padding-top: 2rem;
+      margin-top: 3rem;
+      color: #c8b18b;
+    }
+
+    /* ----- LOGIN & SIGNUP MODALS ----- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background-color: #fffcf1;
+      margin: 5% auto;
+      padding: 2.5rem;
+      border-radius: 50px 20px 50px 20px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      border: 3px solid #f1b24a;
+      position: relative;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      font-size: 2rem;
+      color: #b3681c;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #f1b24a;
+    }
+
+    .modal h2 {
+      font-size: 2.2rem;
+      color: #2b4b2b;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Rockwell', serif;
+    }
+
+    .modal h2 i {
+      color: #f1b24a;
+    }
+
+    .modal-subtitle {
+      color: #5d7252;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2b4b2b;
+      font-weight: 700;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #f5daa4;
+      border-radius: 15px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+      background: white;
+      font-family: 'Rockwell', serif;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #f1b24a;
+    }
+
+    .password-requirements {
+      font-size: 0.85rem;
+      color: #5d7252;
+      margin-top: 0.3rem;
+      font-weight: 700;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .checkbox-group input {
+      width: auto;
+    }
+
+    .checkbox-group a {
+      color: #f1b24a;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .checkbox-group a:hover {
+      text-decoration: underline;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .forgot-password a {
+      color: #b3681c;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .modal .btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
+    .social-login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .social-login p {
+      color: #5d7252;
+      margin-bottom: 1rem;
+      position: relative;
+      font-weight: 700;
+    }
+
+    .social-login p::before,
+    .social-login p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: #f5daa4;
+    }
+
+    .social-login p::before {
+      left: 0;
+    }
+
+    .social-login p::after {
+      right: 0;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid #f5daa4;
+      border-radius: 15px;
+      background: white;
+      color: #2b4b2b;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: 'Rockwell', serif;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: #fef7e7;
+      border-color: #f1b24a;
+    }
+
+    .social-btn.google {
+      color: #DB4437;
+    }
+
+    .social-btn.facebook {
+      color: #4267B2;
+    }
+
+    .switch-modal {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #5d7252;
+      font-weight: 700;
+    }
+
+    .switch-modal a {
+      color: #f1b24a;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .switch-modal a:hover {
+      text-decoration: underline;
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+    }
+
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #f5daa4;
+      border-radius: 10px;
+      background: white;
+      color: #2b4b2b;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Rockwell', serif;
+    }
+
+    .page-btn.active {
+      background: #f1b24a;
+      border-color: #f1b24a;
+      color: white;
+    }
+
+    .page-btn:hover {
+      border-color: #f1b24a;
+    }
+
+    @media (max-width: 700px) {
+      .hero-text h1 { font-size: 2.5rem; }
+      .top-bar .container { flex-direction: column; gap: 0.8rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      .modal-content { margin: 10% auto; padding: 1.5rem; }
+      .policy-content, .terms-content, .deletion-content { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="top-bar">
+    <div class="container">
+      <div class="logo-area">
+        <i class="fas fa-bug bee-icon"></i>
+        <div class="logo-text">HIVE AND HARVEST <span></span></div>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="showProductsPage(event)">Products</a>
+        <a href="#" onclick="scrollToBeekeepers(event)">Beekeepers</a>
+        <a href="#" onclick="showAboutPage(event)">About</a>
+        <a href="#" class="btn btn-outline" id="signupBtn">Sign UP</a>
+        <a href="#" class="btn btn-outline" id="loginBtn">Log in</a>
+        <a href="#" class="btn" id="joinHiveBtn">Join hive</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HOME PAGE (default view) -->
+  <div id="homePage">
+    <!-- hero section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-text">
+          <h1><i class="fas fa-hand-holding-heart"></i> Share the golden harvest</h1>
+          <p>Connect with local beekeepers, trade fresh honey, pollen, beeswax, and more. Direct from the apiary to your table.</p>
+          <div class="hero-buttons">
+            <a href="#" class="btn" onclick="showProductsPage(event)">🍯 Browse produce</a>
+            <a href="#" class="btn btn-outline" id="heroBecomeBtn">🐝 Become a sharer</a>
+          </div>
+        </div>
+        <div class="hero-img" role="img" aria-label="Beekeeper working with bees"></div>
+      </div>
+    </section>
+
+    <!-- BEEKEEPER PROFILES SECTION -->
+    <section class="beekeepers-section" id="beekeepersSection">
+      <div class="container">
+        <h2 class="section-title"><i class="fas fa-person"></i> Meet our beekeepers</h2>
+        <div class="section-subhead">The passionate people behind the honey</div>
+        
+        <div class="beekeeper-grid">
+          
+          <!-- Beekeeper 1 -->
+          <div class="beekeeper-card">
+            <div class="beekeeper-avatar">👩‍🌾</div>
+            <h3 class="beekeeper-name">IHIMBAZWE Emmanuel</h3>
+            <p class="beekeeper-apiary">🌻 BUGESERA International Airport Apiary</p>
+            <p class="beekeeper-bio">5 years experience • 50 hives • Specializing in wildflower honey</p>
+            <div class="beekeeper-stats">
+              <span>🐝 40 jars/month</span>
+              <span>⭐ 4.9</span>
+            </div>
+            <a href="#" class="beekeeper-link">view produce →</a>
+          </div>
+          
+          <!-- Beekeeper 2 -->
+          <div class="beekeeper-card">
+            <div class="beekeeper-avatar">👨‍🌾</div>
+            <h3 class="beekeeper-name">TUYISHIMIRE Emmanuel</h3>
+            <p class="beekeeper-apiary">🌳 Mayange Apiary</p>
+            <p class="beekeeper-bio">8 years experience • 20 hives • organic beeswax specialist</p>
+            <div class="beekeeper-stats">
+              <span>🐝 60 jars/month</span>
+              <span>⭐ 5.0</span>
+            </div>
+            <a href="#" class="beekeeper-link">view produce →</a>
+          </div>
+
+          <!-- Beekeeper 3 -->
+          <div class="beekeeper-card">
+            <div class="beekeeper-avatar">👩‍🍳</div>
+            <h3 class="beekeeper-name">MUKAMANA Jeanne</h3>
+            <p class="beekeeper-apiary">🌄 Kigali Hills Apiary</p>
+            <p class="beekeeper-bio">3 years experience • 15 hives • Specializing in organic honey</p>
+            <div class="beekeeper-stats">
+              <span>🐝 25 jars/month</span>
+              <span>⭐ 4.8</span>
+            </div>
+            <a href="#" class="beekeeper-link">view produce →</a>
+          </div>
+
+          <!-- Beekeeper 4 -->
+          <div class="beekeeper-card">
+            <div class="beekeeper-avatar">👴</div>
+            <h3 class="beekeeper-name">HABIMANA Pierre</h3>
+            <p class="beekeeper-apiary">🏞️ Lake Muhazi Bees</p>
+            <p class="beekeeper-bio">15 years experience • 80 hives • Traditional beekeeping methods</p>
+            <div class="beekeeper-stats">
+              <span>🐝 100 jars/month</span>
+              <span>⭐ 5.0</span>
+            </div>
+            <a href="#" class="beekeeper-link">view produce →</a>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href="#" class="btn btn-outline" onclick="showMoreBeekeepers(event)">See all beekeepers →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- featured produce -->
+    <section class="featured-section">
+      <div class="container">
+        <h2 class="section-title"><i class="fas fa-jar"></i> Today's local harvest</h2>
+        <div class="section-subhead">Fresh from hives near you — browse and share</div>
+
+        <div class="card-grid">
+          <!-- card 1 - wildflower honey -->
+          <div class="produce-card">
+            <div class="card-img img-honey-jar">
+              <span class="product-badge">Popular</span>
+            </div>
+            <div class="card-content">
+              <h3>Wildflower honey <span>🍯</span></h3>
+              <p>Set from summer blossoms, light amber. harvested last moon.</p>
+              
+              <div class="card-beekeeper-info">
+                <div class="beekeeper-mini">
+                  <span style="font-size: 1.5rem;">👩‍🌾</span>
+                  <span>IHIMBAZWE's Bees</span>
+                </div>
+                <div class="beekeeper-details">
+                  <span>📍 3 miles away</span> • 
+                  <span>⭐ 4.9 (32 reviews)</span> • 
+                  <span>🐝 since 2019</span>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                <span class="price">$12<span style="font-size:0.9rem;">/jar</span></span>
+                <button class="add-to-cart-btn" onclick="showPayment('Wildflower Honey', 12)">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- card 2 - honeycomb piece -->
+          <div class="produce-card">
+            <div class="card-img img-honeycomb">
+              <span class="product-badge">Fresh</span>
+            </div>
+            <div class="card-content">
+              <h3>Honeycomb piece</h3>
+              <p>Raw, chewable comb. rich and aromatic. limited batch.</p>
+              
+              <div class="card-beekeeper-info">
+                <div class="beekeeper-mini">
+                  <span style="font-size: 1.5rem;">👨‍🌾</span>
+                  <span>Mayange Apiary</span>
+                </div>
+                <div class="beekeeper-details">
+                  <span>📍 7 miles away</span> • 
+                  <span>⭐ 5.0 (18 reviews)</span> • 
+                  <span>🐝 since 2015</span>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                <span class="price">$9<span style="font-size:0.9rem;">/ea</span></span>
+                <button class="add-to-cart-btn" onclick="showPayment('Honeycomb Piece', 9)">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- card 3 - pure beeswax -->
+          <div class="produce-card">
+            <div class="card-img img-beeswax-block">
+              <span class="product-badge">Organic</span>
+            </div>
+            <div class="card-content">
+              <h3>Pure beeswax</h3>
+              <p>Hand-filtered, perfect for balms & candles. 200g block.</p>
+              
+              <div class="card-beekeeper-info">
+                <div class="beekeeper-mini">
+                  <span style="font-size: 1.5rem;">👨‍🌾</span>
+                  <span>Mayange Apiary</span>
+                </div>
+                <div class="beekeeper-details">
+                  <span>📍 7 miles away</span> • 
+                  <span>⭐ 5.0 (24 reviews)</span> • 
+                  <span>🐝 since 2015</span>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                <span class="price">$15</span>
+                <button class="add-to-cart-btn" onclick="showPayment('Pure Beeswax', 15)">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- card 4 - bee pollen -->
+          <div class="produce-card">
+            <div class="card-img img-pollen-bowl">
+              <span class="product-badge">Protein-rich</span>
+            </div>
+            <div class="card-content">
+              <h3>Bee pollen <span>🌸</span></h3>
+              <p>Wildflower pollen granules, protein-rich. 100g bag.</p>
+              
+              <div class="card-beekeeper-info">
+                <div class="beekeeper-mini">
+                  <span style="font-size: 1.5rem;">👩‍🌾</span>
+                  <span>IHIMBAZWE's Bees</span>
+                </div>
+                <div class="beekeeper-details">
+                  <span>📍 3 miles away</span> • 
+                  <span>⭐ 4.9 (56 reviews)</span> • 
+                  <span>🐝 since 2019</span>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                <span class="price">$11</span>
+                <button class="add-to-cart-btn" onclick="showPayment('Bee Pollen', 11)">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:right; margin-top:1rem;">
+          <a href="#" class="btn-outline btn" onclick="showProductsPage(event)">see all produce →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <div class="container">
+        <h2 class="section-title"><i class="fas fa-map-signs"></i> HOW SHARING WORKS</h2>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-img">🐝</div>
+            <h4>1. LIST</h4>
+            <p>Show your harvest: honey, wax, propolis – snap a photo.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-img">🤝</div>
+            <h4>2. CONNECT</h4>
+            <p>Neighbors send requests or trade offers directly.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-img">🍯</div>
+            <h4>3. SHARE AND ENJOY</h4>
+            <p>Arrange pickup at the hive or a local market point.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="community">
+      <div class="container">
+        <h2 class="section-title"><i class="fas fa-comments"></i> FROM THE BEEKEEPERS</h2>
+        <div class="testimonial-grid">
+          <div class="test-card">
+            <i class="fas fa-quote-left"></i>
+            <p>“I traded extra comb for a neighbour’s beeswax. now we supply a small co-op. This platform connects real beekeepers.”</p>
+            <div class="beekeeper">
+              <div class="beekeeper-avatar-small">🐝</div>
+              <span>Semagori, 3rd year beekeeper</span>
+            </div>
+          </div>
+          <div class="test-card">
+            <i class="fas fa-quote-left"></i>
+            <p>“Sold out my chestnut honey in two days. People appreciate local, unfiltered produce. Hive&Harvest makes it easy.”</p>
+            <div class="beekeeper">
+              <div class="beekeeper-avatar-small">🌸</div>
+              <span>Rukundo, hillside apiary</span>
+            </div>
+          </div>
+          <div class="test-card">
+            <i class="fas fa-quote-left"></i>
+            <p>“I found organic pollen and cedar hives through trade. It’s like an online farmers’ market just for bee lovers.”</p>
+            <div class="beekeeper">
+              <div class="beekeeper-avatar-small">🍯</div>
+              <span>Riverbend bees</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <div class="container">
+        <h2>Are you ready to share your harvest?</h2>
+        <a href="#" class="btn" id="ctaJoinBtn">join the hive today</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div id="aboutPage" class="about-page">
+    <div class="container">
+      <div class="products-header">
+        <a href="#" class="back-btn" onclick="showHomePage(event)"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      </div>
+
+      <div class="about-header">
+        <h1>About Hive & Harvest</h1>
+        <p>Connecting beekeepers with honey lovers since 2025</p>
+      </div>
+
+      <div class="about-hero-image"></div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3><i class="fas fa-bee"></i> Our Mission</h3>
+          <p>Our platform is designed to help beekeepers sell high-quality bee products such as honey, beeswax, and propolis directly to customers.</p>
+        </div>
+
+        <div class="about-card">
+          <h3><i class="fas fa-hand-holding-heart"></i> Our Vision</h3>
+          <p>We aim to empower local farmers by giving them access to a wider market while providing customers with authentic, natural products.</p>
+        </div>
+
+        <div class="about-card">
+          <h3><i class="fas fa-scale-balanced"></i> Fair Trade</h3>
+          <p>Inspired by the challenges faced by beekeepers, we created this platform to eliminate middlemen and ensure fair pricing.</p>
+        </div>
+      </div>
+
+      <div class="about-mission">
+        <h2><i class="fas fa-quote-left" style="color: #f1b24a;"></i> Join Us</h2>
+        <p>Join us in supporting sustainable agriculture and improving livelihoods.</p>
+        <p style="margin-top: 2rem; font-size: 1.3rem; color: #b3681c;">Together, we can make a difference - one jar of honey at a time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY PAGE -->
+  <div id="privacyPage" class="policy-page">
+    <div class="container">
+      <div class="products-header">
+        <a href="#" class="back-btn" onclick="showHomePage(event)"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      </div>
+
+      <div class="policy-header">
+        <h1>Privacy Policy</h1>
+        <p>Last updated: 2026</p>
+      </div>
+
+      <div class="policy-content">
+        <div class="policy-section">
+          <h2>1. Introduction</h2>
+          <p>We value your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our platform to buy or sell bee products.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>2. Information We Collect</h2>
+          <ul>
+            <li>Personal details (name, email, phone, address)</li>
+            <li>Transaction data (orders, payments processed securely via third-party providers)</li>
+            <li>Usage data (cookies, IP address, browser type, site activity)</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>3. How We Use Your Information</h2>
+          <ul>
+            <li>To process orders and facilitate transactions</li>
+            <li>To improve website functionality and user experience</li>
+            <li>To communicate updates, promotions, or support</li>
+            <li>To comply with legal obligations</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>4. Sharing of Information</h2>
+          <ul>
+            <li>With trusted payment processors and delivery services</li>
+            <li>With legal authorities when required</li>
+            <li>We do not sell your personal data</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>5. Data Security</h2>
+          <p>We use encryption, secure servers, and access controls to protect your information.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>6. Your Rights</h2>
+          <p>Depending on your location, you may:</p>
+          <ul>
+            <li>Access, correct, or delete your data</li>
+            <li>Opt out of marketing communications</li>
+            <li>Request data portability</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h2>7. Cookies</h2>
+          <p>We use cookies to enhance site performance. You can disable them in your browser settings.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2>8. Changes to This Policy</h2>
+          <p>We may update this Privacy Policy. Updates will be posted here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS & CONDITIONS PAGE -->
+  <div id="termsPage" class="terms-page">
+    <div class="container">
+      <div class="products-header">
+        <a href="#" class="back-btn" onclick="showHomePage(event)"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      </div>
+
+      <div class="terms-header">
+        <h1>Terms & Conditions</h1>
+        <p>Last updated: 2026</p>
+      </div>
+
+      <div class="terms-content">
+        <div class="terms-section">
+          <h2>1. Acceptance of Terms</h2>
+          <p>By using our website, you agree to these Terms & Conditions. If you do not agree, please stop using the platform.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>2. Eligibility</h2>
+          <p>You must be at least 18 years old. Sellers must comply with local laws regarding bee product sales.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>3. User Accounts</h2>
+          <ul>
+            <li>Keep your login details secure</li>
+            <li>Provide accurate and up-to-date information</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h2>4. Marketplace Rules</h2>
+          <ul>
+            <li>Sellers must list products honestly and accurately</li>
+            <li>Buyers must pay promptly via approved payment methods</li>
+            <li>Fraudulent activity or abusive behavior will result in suspension</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h2>5. Payments & Fees</h2>
+          <p>Payments are processed securely via third-party providers. Transaction fees will be disclosed before purchase.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>6. Shipping & Delivery</h2>
+          <p>Sellers are responsible for timely shipping. Buyers should review delivery terms before purchase.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>7. Limitation of Liability</h2>
+          <p>We are not responsible for:</p>
+          <ul>
+            <li>Product quality (seller's responsibility)</li>
+            <li>Delays, damages, or losses caused by third-party services</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h2>8. Intellectual Property</h2>
+          <p>All site content (logos, text, design) is owned by us or licensed to us. Users may not copy or distribute without permission.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>9. Termination</h2>
+          <p>We may suspend or terminate accounts that violate these Terms.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>10. Governing Law</h2>
+          <p>These Terms are governed by the laws of Rwanda.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA DELETION INSTRUCTIONS PAGE -->
+  <div id="deletionPage" class="deletion-page">
+    <div class="container">
+      <div class="products-header">
+        <a href="#" class="back-btn" onclick="showHomePage(event)"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      </div>
+
+      <div class="deletion-header">
+        <h1>Data Deletion Instructions</h1>
+        <p>Last updated: March 2026</p>
+      </div>
+
+      <div class="deletion-content">
+        <div class="deletion-step">
+          <h3><i class="fas fa-envelope" style="color: #f1b24a;"></i> Option 1: Request via Email</h3>
+          <p>Send an email to <strong class="deletion-email">niyituzidieudonne@gmail.com</strong> with:</p>
+          <ul>
+            <li>Subject: "Data Deletion Request"</li>
+            <li>Your full name and email used for login</li>
+            <li>A message requesting data deletion</li>
+          </ul>
+          <p>We will process your request within 7 business days and send a confirmation code.</p>
+        </div>
+        
+        <div class="deletion-step">
+          <h3><i class="fab fa-facebook" style="color: #4267B2;"></i> Option 2: Automated Deletion</h3>
+          <p>When you disconnect your Facebook account from our app, we automatically delete your data within 30 days.</p>
+          <p>To disconnect: Go to <strong>Facebook Settings > Apps and Websites > Remove Hive and Harvest</strong></p>
+        </div>
+        
+        <div class="deletion-step">
+          <h3><i class="fas fa-check-circle" style="color: #f1b24a;"></i> Check Deletion Status</h3>
+          <p>To check the status of your deletion request, contact us at <strong class="deletion-email">niyituzidieudonne@gmail.com</strong> with your confirmation code.</p>
+        </div>
+        
+        <div class="deletion-note">
+          <p><strong>Confirmation Code Example:</strong></p>
+          <div class="confirmation-code">DEL-2026-001</div>
+          <p style="margin-top: 10px;">You'll receive this via email after requesting deletion</p>
+        </div>
+        
+        <p style="text-align: center; margin-top: 20px; color: #5d7252;"><small>For Facebook compliance: This page explains how users can request deletion of their data.</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS PAGE -->
+  <div id="productsPage" class="products-page">
+    <div class="container">
+      <div class="products-header">
+        <a href="#" class="back-btn" onclick="showHomePage(event)"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h2 class="section-title"><i class="fas fa-jar"></i> All Products</h2>
+      </div>
+
+      <div class="filter-bar">
+        <select class="filter-select">
+          <option>All Categories</option>
+          <option>Honey</option>
+          <option>Honeycomb</option>
+          <option>Beeswax</option>
+          <option>Pollen</option>
+          <option>Propolis</option>
+          <option>Royal Jelly</option>
+        </select>
+        <select class="filter-select">
+          <option>Sort by: Latest</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Rating</option>
+        </select>
+        <div class="search-box">
+          <input type="text" placeholder="Search products...">
+          <button><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <!-- Product 1 - Wildflower Honey -->
+        <div class="produce-card">
+          <div class="card-img img-honey-jar">
+            <span class="product-badge">Best Seller</span>
+          </div>
+          <div class="card-content">
+            <h3>Wildflower Honey</h3>
+            <p>Pure raw honey from diverse wildflowers. Rich flavor, 500g jar.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👩‍🌾 IHIMBAZWE's Bees</span>
+              </div>
+              <div class="beekeeper-details">⭐ 4.9 (32 reviews) • 3 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$12</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Wildflower Honey', 12)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 - Honeycomb -->
+        <div class="produce-card">
+          <div class="card-img img-honeycomb">
+            <span class="product-badge">Fresh</span>
+          </div>
+          <div class="card-content">
+            <h3>Raw Honeycomb</h3>
+            <p>Chewable honeycomb straight from the hive. 250g piece.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👨‍🌾 Mayange Apiary</span>
+              </div>
+              <div class="beekeeper-details">⭐ 5.0 (18 reviews) • 7 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$9</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Raw Honeycomb', 9)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 - Beeswax Block -->
+        <div class="produce-card">
+          <div class="card-img img-beeswax-block">
+            <span class="product-badge">Organic</span>
+          </div>
+          <div class="card-content">
+            <h3>Pure Beeswax</h3>
+            <p>Hand-filtered, natural yellow beeswax. 200g block.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👨‍🌾 Mayange Apiary</span>
+              </div>
+              <div class="beekeeper-details">⭐ 5.0 (24 reviews) • 7 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$15</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Pure Beeswax', 15)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 - Bee Pollen -->
+        <div class="produce-card">
+          <div class="card-img img-pollen-bowl">
+            <span class="product-badge">Protein-rich</span>
+          </div>
+          <div class="card-content">
+            <h3>Bee Pollen</h3>
+            <p>Wildflower pollen granules, perfect for smoothies. 100g bag.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👩‍🌾 IHIMBAZWE's Bees</span>
+              </div>
+              <div class="beekeeper-details">⭐ 4.9 (56 reviews) • 3 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$11</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Bee Pollen', 11)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5 - Propolis Tincture -->
+        <div class="produce-card">
+          <div class="card-img img-propolis">
+            <span class="product-badge">Natural</span>
+          </div>
+          <div class="card-content">
+            <h3>Propolis Tincture</h3>
+            <p>Bee propolis extract, 30ml dropper bottle. Immune support.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👨‍🌾 Mayange Apiary</span>
+              </div>
+              <div class="beekeeper-details">⭐ 4.8 (12 reviews) • 7 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$18</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Propolis Tincture', 18)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6 - Royal Jelly -->
+        <div class="produce-card">
+          <div class="card-img img-royal-jelly">
+            <span class="product-badge">Premium</span>
+          </div>
+          <div class="card-content">
+            <h3>Royal Jelly</h3>
+            <p>Fresh royal jelly, 50g jar. Harvested this week.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👩‍🌾 IHIMBAZWE's Bees</span>
+              </div>
+              <div class="beekeeper-details">⭐ 5.0 (8 reviews) • 3 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$25</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Royal Jelly', 25)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 7 - Beeswax Candles -->
+        <div class="produce-card">
+          <div class="card-img img-beeswax-candles">
+            <span class="product-badge">Handmade</span>
+          </div>
+          <div class="card-content">
+            <h3>Beeswax Candles</h3>
+            <p>Set of 4 tapered candles, 100% beeswax. Long burning.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👨‍🌾 Mayange Apiary</span>
+              </div>
+              <div class="beekeeper-details">⭐ 4.9 (21 reviews) • 7 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$22</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Beeswax Candles', 22)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 8 - Creamed Honey -->
+        <div class="produce-card">
+          <div class="card-img img-creamed-honey">
+            <span class="product-badge">Spreadable</span>
+          </div>
+          <div class="card-content">
+            <h3>Creamed Honey</h3>
+            <p>Smooth, spreadable crystallized honey. 300g jar.</p>
+            <div class="card-beekeeper-info">
+              <div class="beekeeper-mini">
+                <span>👩‍🌾 IHIMBAZWE's Bees</span>
+              </div>
+              <div class="beekeeper-details">⭐ 4.8 (15 reviews) • 3 miles away</div>
+            </div>
+            <div class="card-footer">
+              <span class="price">$14</span>
+              <button class="add-to-cart-btn" onclick="showPayment('Creamed Honey', 14)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <span class="page-btn active">1</span>
+        <span class="page-btn">2</span>
+        <span class="page-btn">3</span>
+        <span class="page-btn">4</span>
+        <span class="page-btn">5</span>
+        <span class="page-btn">...</span>
+        <span class="page-btn">10</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-col">
+        <i class="fas fa-bug"></i> <strong style="font-size:1.5rem;">HIVE AND HARVEST</strong>
+        <p>Helping beekeepers share their produces — direct, fair, golden.</p>
+      </div>
+      <div class="footer-col">
+        <p><i class="fas fa-leaf"></i> No additives</p>
+        <p><i class="fas fa-handshake"></i> No middlemen</p>
+        <p><i class="fas fa-map-pin"></i> Local pickup only</p>
+      </div>
+      <div class="footer-col">
+        <p><a href="https://www.instagram.com/niyituzidieudonnediuf" target="_blank"><i class="fab fa-instagram"></i> @niyituzidieudonnediuf</a></p>
+        <p><a href="https://www.facebook.com/niyituzidieudonnediuf" target="_blank"><i class="fab fa-facebook-f"></i> @niyituzidieudonnediuf</a></p>
+        <p><a href="https://x.com/NiyituziD2" target="_blank"><i class="fab fa-twitter"></i> NiyituziD2</a></p>
+        <p><a href="https://wa.me/250792359477" target="_blank"><i class="fab fa-whatsapp"></i> +250792359477</a></p>
+        <p><a href="https://www.linkedin.com/in/niyituzidieudonne" target="_blank"><i class="fab fa-linkedin-in"></i> NIYITUZI Dieudonne</a></p>
+        <p><a href="mailto:niyituzidieudonne@gmail.com"><i class="fas fa-envelope"></i> niyituzidieudonne@gmail.com</a><br>
+        <a href="mailto:emmahimba2020@gmail.com">emmahimba2020@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2025-2026 Hive & Harvest – A beekeeper produce sharing community. All buzz welcome.
+    </div>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeLogin">&times;</span>
+    <h2><i class="fas fa-bee"></i> Welcome Back</h2>
+    <p class="modal-subtitle">Sign in to your hive account</p>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      
+      <div class="forgot-password">
+        <a href="#" id="forgotPasswordLink">Forgot password?</a>
+      </div>
+      
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+    
+    <div class="social-login">
+      <p>or continue with</p>
+      <div class="social-buttons">
+        <a href="https://accounts.google.com/o/oauth2/auth?client_id=your-client-id&redirect_uri=your-redirect-uri&response_type=code&scope=email%20profile" class="social-btn google" target="_blank"><i class="fab fa-google"></i> Google</a>
+        <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=1991478908456155&redirect_uri=https://your-redirect-uri.com&scope=email,public_profile" class="social-btn facebook" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+      </div>
+    </div>
+    
+    <div class="switch-modal">
+      New to the hive? <a id="switchToSignup">Join now</a>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeSignup">&times;</span>
+    <h2><i class="fas fa-bee"></i> Join the Hive</h2>
+    <p class="modal-subtitle">Create your beekeeper account</p>
+    
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" placeholder="Your name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="••••••••" required>
+        <div class="password-requirements">At least 8 characters with 1 number</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="signupConfirmPassword">Confirm Password</label>
+        <input type="password" id="signupConfirmPassword" placeholder="••••••••" required>
+      </div>
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="#" onclick="showTermsPage(event)">Terms</a> and <a href="#" onclick="showPrivacyPage(event)">Privacy Policy</a></label>
+      </div>
+      
+      <button type="submit" class="btn">Create Account</button>
+    </form>
+    
+    <div class="social-login">
+      <p>or sign up with</p>
+      <div class="social-buttons">
+        <a href="https://accounts.google.com/o/oauth2/auth?client_id=your-client-id&redirect_uri=your-redirect-uri&response_type=code&scope=email%20profile" class="social-btn google" target="_blank"><i class="fab fa-google"></i> Google</a>
+        <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=1991478908456155&redirect_uri=https://your-redirect-uri.com&scope=email,public_profile" class="social-btn facebook" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+      </div>
+    </div>
+    
+    <div class="switch-modal">
+      Already have an account? <a id="switchToLogin">Sign in</a>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL (NEW) -->
+<div id="forgotPasswordModal" class="modal">
+  <div class="modal-content" style="max-width: 400px;">
+    <span class="close-modal" id="closeForgot">&times;</span>
+    <h2><i class="fas fa-key"></i> Reset Password</h2>
+    <p class="modal-subtitle">Enter your email to receive verification</p>
+    
+    <form id="forgotPasswordForm">
+      <div class="form-group">
+        <label for="resetEmail">Email Address</label>
+        <input type="email" id="resetEmail" placeholder="your@email.com" required>
+      </div>
+      
+      <div style="background: #fef7e7; padding: 1rem; border-radius: 15px; margin: 1rem 0;">
+        <p style="display: flex; align-items: center; gap: 0.5rem; color: #5d7252; font-size: 0.9rem;">
+          <i class="fas fa-info-circle" style="color: #f1b24a;"></i>
+          We'll send a verification code to this email
+        </p>
+      </div>
+      
+      <button type="submit" class="btn">Send Verification Code</button>
+    </form>
+    
+    <div class="switch-modal">
+      <a href="#" id="backToLogin">Back to Sign In</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content" style="max-width: 400px;">
+    <span class="close-modal" onclick="closePaymentModal()">&times;</span>
+    <h2><i class="fas fa-phone"></i> MTN Mobile Money</h2>
+    <p class="modal-subtitle">Complete your purchase</p>
+    
+    <div style="text-align: center; margin: 2rem 0;">
+      <div style="font-size: 2rem; color: #f1b24a; margin-bottom: 1rem;">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+      <h3 id="paymentProductName" style="margin-bottom: 0.5rem;">Product Name</h3>
+      <p style="font-size: 2rem; color: #8f5818; font-weight: 700;" id="paymentAmount">$0</p>
+    </div>
+    
+    <div style="background: #fef7e7; padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+      <p style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+        <i class="fas fa-phone" style="color: #f1b24a;"></i>
+        <span style="font-weight: 700;">MTN Rwanda: +250792359477</span>
+      </p>
+      <p style="font-size: 0.9rem; color: #5d7252;">
+        1. Open MTN Mobile Money on your phone<br>
+        2. Select "Pay Merchant"<br>
+        3. Enter this number<br>
+        4. Enter amount and confirm
+      </p>
+    </div>
+    
+    <a href="https://wa.me/250792359477?text=I%20want%20to%20pay%20for%20[PRODUCT]%20-%20[AMOUNT]" 
+       target="_blank" 
+       class="btn" 
+       style="text-align: center; display: block; text-decoration: none;"
+       id="paymentWhatsAppBtn">
+      <i class="fab fa-whatsapp"></i> Confirm via WhatsApp
+    </a>
+    
+    <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: #5d7252;">
+      You'll receive confirmation after payment
+    </p>
+  </div>
+</div>
+
+<script>
+// Get modal elements
+const loginModal = document.getElementById('loginModal');
+const signupModal = document.getElementById('signupModal');
+const paymentModal = document.getElementById('paymentModal');
+const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+
+// Get buttons that open modals
+const loginBtn = document.getElementById('loginBtn');
+const signupBtn = document.getElementById('signupBtn');
+const joinHiveBtn = document.getElementById('joinHiveBtn');
+const heroBecomeBtn = document.getElementById('heroBecomeBtn');
+const ctaJoinBtn = document.getElementById('ctaJoinBtn');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+
+// Get close buttons
+const closeLogin = document.getElementById('closeLogin');
+const closeSignup = document.getElementById('closeSignup');
+const closeForgot = document.getElementById('closeForgot');
+
+// Get switch links
+const switchToSignup = document.getElementById('switchToSignup');
+const switchToLogin = document.getElementById('switchToLogin');
+const backToLogin = document.getElementById('backToLogin');
+
+// Page navigation
+const homePage = document.getElementById('homePage');
+const productsPage = document.getElementById('productsPage');
+const aboutPage = document.getElementById('aboutPage');
+const privacyPage = document.getElementById('privacyPage');
+const termsPage = document.getElementById('termsPage');
+const deletionPage = document.getElementById('deletionPage');
+
+function showProductsPage(e) {
+  e.preventDefault();
+  homePage.style.display = 'none';
+  productsPage.style.display = 'block';
+  aboutPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  window.scrollTo(0, 0);
+}
+
+function showHomePage(e) {
+  e.preventDefault();
+  productsPage.style.display = 'none';
+  aboutPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  homePage.style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function showAboutPage(e) {
+  e.preventDefault();
+  homePage.style.display = 'none';
+  productsPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  aboutPage.style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function showPrivacyPage(e) {
+  e.preventDefault();
+  homePage.style.display = 'none';
+  productsPage.style.display = 'none';
+  aboutPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  privacyPage.style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function showTermsPage(e) {
+  e.preventDefault();
+  homePage.style.display = 'none';
+  productsPage.style.display = 'none';
+  aboutPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  termsPage.style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function showDeletionPage(e) {
+  e.preventDefault();
+  homePage.style.display = 'none';
+  productsPage.style.display = 'none';
+  aboutPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+// Scroll to Beekeepers section
+function scrollToBeekeepers(e) {
+  e.preventDefault();
+  productsPage.style.display = 'none';
+  aboutPage.style.display = 'none';
+  privacyPage.style.display = 'none';
+  termsPage.style.display = 'none';
+  deletionPage.style.display = 'none';
+  homePage.style.display = 'block';
+  
+  setTimeout(() => {
+    const beekeepersSection = document.getElementById('beekeepersSection');
+    beekeepersSection.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+// Payment function
+function showPayment(productName, price) {
+  document.getElementById('paymentProductName').textContent = productName;
+  document.getElementById('paymentAmount').textContent = '$' + price;
+  
+  const whatsappBtn = document.getElementById('paymentWhatsAppBtn');
+  const message = `I want to pay for ${productName} - $${price} via MTN Mobile Money`;
+  whatsappBtn.href = `https://wa.me/250792359477?text=${encodeURIComponent(message)}`;
+  
+  paymentModal.style.display = 'block';
+}
+
+function closePaymentModal() {
+  paymentModal.style.display = 'none';
+}
+
+// Show more beekeepers
+function showMoreBeekeepers(e) {
+  e.preventDefault();
+  alert('This would show all beekeepers - you can create a beekeepers.html page for this functionality');
+}
+
+// Open Login Modal
+loginBtn.onclick = function(e) {
+  e.preventDefault();
+  loginModal.style.display = 'block';
+  signupModal.style.display = 'none';
+  paymentModal.style.display = 'none';
+  forgotPasswordModal.style.display = 'none';
+}
+
+// Open Signup Modal (multiple buttons)
+function openSignup(e) {
+  e.preventDefault();
+  signupModal.style.display = 'block';
+  loginModal.style.display = 'none';
+  paymentModal.style.display = 'none';
+  forgotPasswordModal.style.display = 'none';
+}
+
+signupBtn.onclick = openSignup;
+joinHiveBtn.onclick = openSignup;
+heroBecomeBtn.onclick = openSignup;
+ctaJoinBtn.onclick = openSignup;
+
+// Open Forgot Password Modal
+forgotPasswordLink.onclick = function(e) {
+  e.preventDefault();
+  loginModal.style.display = 'none';
+  forgotPasswordModal.style.display = 'block';
+}
+
+// Close modals
+closeLogin.onclick = function() {
+  loginModal.style.display = 'none';
+}
+
+closeSignup.onclick = function() {
+  signupModal.style.display = 'none';
+}
+
+closeForgot.onclick = function() {
+  forgotPasswordModal.style.display = 'none';
+}
+
+// Switch between modals
+switchToSignup.onclick = function(e) {
+  e.preventDefault();
+  loginModal.style.display = 'none';
+  signupModal.style.display = 'block';
+  forgotPasswordModal.style.display = 'none';
+}
+
+switchToLogin.onclick = function(e) {
+  e.preventDefault();
+  signupModal.style.display = 'none';
+  loginModal.style.display = 'block';
+  forgotPasswordModal.style.display = 'none';
+}
+
+backToLogin.onclick = function(e) {
+  e.preventDefault();
+  forgotPasswordModal.style.display = 'none';
+  loginModal.style.display = 'block';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  if (event.target == loginModal) {
+    loginModal.style.display = 'none';
+  }
+  if (event.target == signupModal) {
+    signupModal.style.display = 'none';
+  }
+  if (event.target == paymentModal) {
+    paymentModal.style.display = 'none';
+  }
+  if (event.target == forgotPasswordModal) {
+    forgotPasswordModal.style.display = 'none';
+  }
+}
+
+// Prevent form submission (for demo)
+document.getElementById('loginForm').onsubmit = function(e) {
+  e.preventDefault();
+  alert('Login functionality would be implemented here');
+  loginModal.style.display = 'none';
+}
+
+document.getElementById('signupForm').onsubmit = function(e) {
+  e.preventDefault();
+  
+  // Simple password match validation
+  const password = document.getElementById('signupPassword').value;
+  const confirm = document.getElementById('signupConfirmPassword').value;
+  
+  if (password !== confirm) {
+    alert('Passwords do not match!');
+    return false;
+  }
+  
+  alert('Account creation would be implemented here');
+  signupModal.style.display = 'none';
+}
+
+document.getElementById('forgotPasswordForm').onsubmit = function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('resetEmail').value;
+  alert(`Verification code would be sent to ${email}`);
+  forgotPasswordModal.style.display = 'none';
+  loginModal.style.display = 'block';
+}
+
+// Initialize home page as visible
+homePage.style.display = 'block';
+productsPage.style.display = 'none';
+aboutPage.style.display = 'none';
+privacyPage.style.display = 'none';
+termsPage.style.display = 'none';
+deletionPage.style.display = 'none';
+</script>
+
+</body>
+</html>
